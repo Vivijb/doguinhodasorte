@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Doguinho da Sorte",
+  "short_name": "Doguinho",
+  "description": "Acesse o Doguinho da Sorte.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
