@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+    <meta name="description" content="Acesse o Doguinho da Sorte.">
+
+    <title>Doguinho da Sorte</title>
+
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Doguinho da Sorte">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #080808;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+        }
+
+        iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #080808;
+        }
+
+        /* FAIXA DE INSTALAÇÃO */
+
+        #installBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999999;
+            background: #151515;
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.35);
+        }
+
+        .install-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .install-info img {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+        }
+
+        .install-text strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .install-text span {
+            display: block;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .install-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        #installButton {
+            background: #20b45a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        #closeInstall {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- AVISO DE INSTALAÇÃO -->
+
+    <div id="installBanner" hidden>
+
+        <div class="install-info">
+            <img src="./icons/icon.svg" alt="Doguinho da Sorte">
+
+            <div class="install-text">
+                <strong>Doguinho da Sorte</strong>
+                <span>Instale nosso aplicativo no seu celular!</span>
+            </div>
+        </div>
+
+        <div class="install-actions">
+            <button id="installButton">
+                INSTALAR
+            </button>
+
+            <button id="closeInstall" aria-label="Fechar">
+                &times;
+            </button>
+        </div>
+
+    </div>
+
+    <!-- SITE PRINCIPAL -->
+
+    <main class="container">
+
+        <iframe
+            src="https://doguinhodasorte.com/pr/GUZztR7J"
+            title="Doguinho da Sorte"
+            allow="autoplay; clipboard-read; clipboard-write; fullscreen; geolocation; microphone; camera; payment; publickey-credentials-get; screen-wake-lock; web-share"
+            allowfullscreen
+            sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads allow-modals allow-pointer-lock allow-presentation allow-top-navigation-by-user-activation"
+            loading="eager">
+        </iframe>
+
+    </main>
+
+    <script>
+        const banner = document.getElementById("installBanner");
+        const installButton = document.getElementById("installButton");
+        const closeButton = document.getElementById("closeInstall");
+
+        let deferredPrompt = null;
+
+        const isInstalled =
+            window.matchMedia("(display-mode: standalone)").matches ||
+            window.navigator.standalone === true;
+
+        // Exibe a faixa, exceto se já estiver instalado ou dispensado
+        if (!isInstalled && !localStorage.getItem("installDismissed")) {
+            banner.hidden = false;
+        }
+
+        // Detecta a possibilidade de instalação
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            banner.hidden = false;
+        });
+
+        // Botão instalar
+        installButton.addEventListener("click", async () => {
+
+            if (deferredPrompt) {
+
+                deferredPrompt.prompt();
+
+                const result = await deferredPrompt.userChoice;
+
+                if (result.outcome === "accepted") {
+                    banner.hidden = true;
+                }
+
+                deferredPrompt = null;
+
+            } else {
+
+                alert(
+                    "Para instalar o Doguinho da Sorte:\n\n" +
+                    "Android/Chrome: abra o menu dos três pontinhos e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n" +
+                    "iPhone/Safari: toque em Compartilhar e depois em 'Adicionar à Tela de Início'."
+                );
+
+            }
+        });
+
+        // Fechar a faixa
+        closeButton.addEventListener("click", () => {
+            banner.hidden = true;
+            localStorage.setItem("installDismissed", "true");
+        });
+
+        // Detecta instalação concluída
+        window.addEventListener("appinstalled", () => {
+            banner.hidden = true;
+            deferredPrompt = null;
+        });
+
+        // Registra o Service Worker
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./sw.js")
+                    .catch(error => console.log("Erro PWA:", error));
+            });
+        }
+    </script>
+
+</body>
+</html>
