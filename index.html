@@ -1,22 +1,30 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080808">
-    <meta name="description" content="Acesse o Doguinho da Sorte.">
 
     <title>Doguinho da Sorte</title>
 
+    <meta name="description" content="Acesse o Doguinho da Sorte.">
+    <meta name="theme-color" content="#5B1263">
+
+    <!-- ÍCONES PERSONALIZADOS -->
+    <link rel="icon" type="image/png" href="./icons/icon-192.png">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+    <!-- CONFIGURAÇÃO PWA -->
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Doguinho da Sorte">
+    <meta name="apple-mobile-web-app-title" content="Doguinho">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -30,6 +38,8 @@
             background: #080808;
             font-family: Arial, sans-serif;
         }
+
+        /* SITE */
 
         .container {
             width: 100%;
@@ -45,7 +55,7 @@
             background: #080808;
         }
 
-        /* FAIXA DE INSTALAÇÃO */
+        /* AVISO DE INSTALAÇÃO */
 
         #installBanner {
             position: fixed;
@@ -53,14 +63,19 @@
             left: 0;
             width: 100%;
             z-index: 999999;
-            background: #151515;
-            color: white;
+
+            background: #5B1263;
+            color: #fff;
+
             padding: 12px 15px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             gap: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,.35);
+
+            box-shadow: 0 3px 12px rgba(0,0,0,.4);
         }
 
         .install-info {
@@ -71,21 +86,22 @@
         }
 
         .install-info img {
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             border-radius: 10px;
+            object-fit: cover;
         }
 
         .install-text strong {
             display: block;
             font-size: 14px;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .install-text span {
             display: block;
             font-size: 11px;
-            color: #ccc;
+            color: #eee;
         }
 
         .install-actions {
@@ -96,13 +112,17 @@
         }
 
         #installButton {
-            background: #20b45a;
-            color: white;
+            background: #FFD32A;
+            color: #42104B;
+
             border: none;
-            padding: 10px 15px;
+            padding: 11px 15px;
+
             border-radius: 7px;
+
             font-weight: bold;
             font-size: 13px;
+
             cursor: pointer;
         }
 
@@ -110,33 +130,71 @@
             background: transparent;
             border: none;
             color: white;
-            font-size: 24px;
+
+            font-size: 25px;
             padding: 4px;
+
             cursor: pointer;
         }
 
         [hidden] {
             display: none !important;
         }
+
+        @media (max-width: 380px) {
+
+            #installBanner {
+                padding: 9px;
+            }
+
+            .install-info img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .install-text strong {
+                font-size: 12px;
+            }
+
+            .install-text span {
+                font-size: 10px;
+            }
+
+            #installButton {
+                padding: 9px 10px;
+                font-size: 11px;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-    <!-- AVISO DE INSTALAÇÃO -->
+    <!-- FAIXA DE INSTALAÇÃO -->
 
     <div id="installBanner" hidden>
 
         <div class="install-info">
-            <img src="./icons/icon.svg" alt="Doguinho da Sorte">
+
+            <img
+                src="./icons/icon-192.png"
+                alt="Doguinho da Sorte">
 
             <div class="install-text">
+
                 <strong>Doguinho da Sorte</strong>
-                <span>Instale nosso aplicativo no seu celular!</span>
+
+                <span>
+                    Instale nosso aplicativo no seu celular!
+                </span>
+
             </div>
+
         </div>
 
         <div class="install-actions">
+
             <button id="installButton">
                 INSTALAR
             </button>
@@ -144,93 +202,204 @@
             <button id="closeInstall" aria-label="Fechar">
                 &times;
             </button>
+
         </div>
 
     </div>
 
-    <!-- SITE PRINCIPAL -->
+
+    <!-- CONTEÚDO PRINCIPAL -->
 
     <main class="container">
 
         <iframe
             src="https://doguinhodasorte.com/pr/GUZztR7J"
             title="Doguinho da Sorte"
-            allow="autoplay; clipboard-read; clipboard-write; fullscreen; geolocation; microphone; camera; payment; publickey-credentials-get; screen-wake-lock; web-share"
+
+            allow="
+                autoplay;
+                clipboard-read;
+                clipboard-write;
+                fullscreen;
+                geolocation;
+                microphone;
+                camera;
+                payment;
+                publickey-credentials-get;
+                screen-wake-lock;
+                web-share
+            "
+
             allowfullscreen
-            sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads allow-modals allow-pointer-lock allow-presentation allow-top-navigation-by-user-activation"
+
+            sandbox="
+                allow-forms
+                allow-scripts
+                allow-same-origin
+                allow-popups
+                allow-popups-to-escape-sandbox
+                allow-downloads
+                allow-modals
+                allow-pointer-lock
+                allow-presentation
+                allow-top-navigation-by-user-activation
+            "
+
             loading="eager">
+
         </iframe>
 
     </main>
 
+
+    <!-- SISTEMA PWA -->
+
     <script>
-        const banner = document.getElementById("installBanner");
-        const installButton = document.getElementById("installButton");
-        const closeButton = document.getElementById("closeInstall");
+
+        const banner =
+            document.getElementById("installBanner");
+
+        const installButton =
+            document.getElementById("installButton");
+
+        const closeButton =
+            document.getElementById("closeInstall");
 
         let deferredPrompt = null;
 
         const isInstalled =
-            window.matchMedia("(display-mode: standalone)").matches ||
+            window.matchMedia(
+                "(display-mode: standalone)"
+            ).matches ||
             window.navigator.standalone === true;
 
-        // Exibe a faixa, exceto se já estiver instalado ou dispensado
-        if (!isInstalled && !localStorage.getItem("installDismissed")) {
+
+        // MOSTRAR AVISO
+
+        if (
+            !isInstalled &&
+            localStorage.getItem("installDismissed") !== "true"
+        ) {
             banner.hidden = false;
         }
 
-        // Detecta a possibilidade de instalação
-        window.addEventListener("beforeinstallprompt", (event) => {
-            event.preventDefault();
-            deferredPrompt = event;
-            banner.hidden = false;
-        });
 
-        // Botão instalar
-        installButton.addEventListener("click", async () => {
+        // DETECTAR INSTALAÇÃO DISPONÍVEL
 
-            if (deferredPrompt) {
+        window.addEventListener(
+            "beforeinstallprompt",
+            (event) => {
 
-                deferredPrompt.prompt();
+                event.preventDefault();
 
-                const result = await deferredPrompt.userChoice;
+                deferredPrompt = event;
 
-                if (result.outcome === "accepted") {
-                    banner.hidden = true;
+                if (
+                    !isInstalled &&
+                    localStorage.getItem("installDismissed") !== "true"
+                ) {
+                    banner.hidden = false;
                 }
 
-                deferredPrompt = null;
+            }
+        );
 
-            } else {
 
-                alert(
-                    "Para instalar o Doguinho da Sorte:\n\n" +
-                    "Android/Chrome: abra o menu dos três pontinhos e escolha 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n" +
-                    "iPhone/Safari: toque em Compartilhar e depois em 'Adicionar à Tela de Início'."
+        // INSTALAR APLICATIVO
+
+        installButton.addEventListener(
+            "click",
+            async () => {
+
+                if (deferredPrompt) {
+
+                    deferredPrompt.prompt();
+
+                    const result =
+                        await deferredPrompt.userChoice;
+
+                    if (result.outcome === "accepted") {
+
+                        banner.hidden = true;
+
+                    }
+
+                    deferredPrompt = null;
+
+                } else {
+
+                    alert(
+                        "Para instalar o Doguinho da Sorte:\n\n" +
+
+                        "ANDROID:\n" +
+                        "Abra os três pontinhos do Chrome e escolha " +
+                        "'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n" +
+
+                        "IPHONE:\n" +
+                        "Toque em Compartilhar e depois em " +
+                        "'Adicionar à Tela de Início'."
+                    );
+
+                }
+
+            }
+        );
+
+
+        // FECHAR AVISO
+
+        closeButton.addEventListener(
+            "click",
+            () => {
+
+                banner.hidden = true;
+
+                localStorage.setItem(
+                    "installDismissed",
+                    "true"
                 );
 
             }
-        });
+        );
 
-        // Fechar a faixa
-        closeButton.addEventListener("click", () => {
-            banner.hidden = true;
-            localStorage.setItem("installDismissed", "true");
-        });
 
-        // Detecta instalação concluída
-        window.addEventListener("appinstalled", () => {
-            banner.hidden = true;
-            deferredPrompt = null;
-        });
+        // INSTALAÇÃO CONCLUÍDA
 
-        // Registra o Service Worker
+        window.addEventListener(
+            "appinstalled",
+            () => {
+
+                banner.hidden = true;
+
+                deferredPrompt = null;
+
+            }
+        );
+
+
+        // SERVICE WORKER
+
         if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("./sw.js")
-                    .catch(error => console.log("Erro PWA:", error));
-            });
+
+            window.addEventListener(
+                "load",
+                () => {
+
+                    navigator.serviceWorker.register("./sw.js")
+                        .catch(error => {
+
+                            console.log(
+                                "Erro ao registrar PWA:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
         }
+
     </script>
 
 </body>
